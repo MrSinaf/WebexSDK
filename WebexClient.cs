@@ -14,6 +14,7 @@ namespace WebexSDK
 		
 		public readonly CallControls call;
 		public readonly PeopleControls people;
+		public readonly WebhooksControls webhooks;
 		internal readonly string token;
 		
 		public WebexClient(string bearer)
@@ -21,6 +22,7 @@ namespace WebexSDK
 			token = bearer;
 			call = new CallControls(this);
 			people = new PeopleControls(this);
+			webhooks = new WebhooksControls(this);
 		}
 		
 		internal async Task<T> Send<T>(string operation, object body)
@@ -38,6 +40,19 @@ namespace WebexSDK
 			try
 			{
 				await PostRest(operation, JsonConvert.SerializeObject(body));
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+		
+		internal async Task<bool> Delete(string operation)
+		{
+			try
+			{
+				await DeleteRest(operation);
 				return true;
 			}
 			catch
@@ -70,20 +85,11 @@ namespace WebexSDK
 		
 		private async Task<string> GetRest(string operation)
 		{
-			if (token == null)
-				throw new ArgumentNullException(nameof(token), "Bearer token cannot be null");
-			
-			var http = new HttpClient();
-			http.BaseAddress = new Uri("https://webexapis.com/v1/");
-			http.DefaultRequestHeaders.Accept.Add(
-				new MediaTypeWithQualityHeaderValue("application/json")
-			);
-			http.DefaultRequestHeaders.Authorization =
-					new AuthenticationHeaderValue("Bearer", token);
+			var http = GetHttpClient();
 			var response = await http.GetAsync(operation);
 			if (!response.IsSuccessStatusCode)
 				throw new HttpRequestException(
-					$"Failed to retrieve data from Webex API: " +
+					"Failed to retrieve data from Webex API: " +
 					$"{response.StatusCode} - {response.ReasonPhrase}"
 				);
 			
@@ -91,6 +97,27 @@ namespace WebexSDK
 		}
 		
 		private async Task<string> PostRest(string operation, string json)
+		{
+			var http = GetHttpClient();
+			var content = new StringContent(json, Encoding.UTF8, "application/json");
+			var response = await http.PostAsync(operation, content);
+			if (!response.IsSuccessStatusCode)
+				throw new HttpRequestException(
+					"Failed to retrieve data from Webex API: " +
+					$"{response.StatusCode} - {response.ReasonPhrase}"
+				);
+			
+			return await response.Content.ReadAsStringAsync();
+		}
+		
+		private async Task<bool> DeleteRest(string operation)
+		{
+			var http = GetHttpClient();
+			var response = await http.DeleteAsync(operation);
+			return response.IsSuccessStatusCode;
+		}
+		
+		private HttpClient GetHttpClient()
 		{
 			if (token == null)
 				throw new ArgumentNullException(nameof(token), "Bearer token cannot be null");
@@ -103,15 +130,7 @@ namespace WebexSDK
 			
 			http.DefaultRequestHeaders.Authorization =
 					new AuthenticationHeaderValue("Bearer", token);
-			var content = new StringContent(json, Encoding.UTF8, "application/json");
-			var response = await http.PostAsync(operation, content);
-			if (!response.IsSuccessStatusCode)
-				throw new HttpRequestException(
-					"Failed to retrieve data from Webex API: " +
-					$"{response.StatusCode} - {response.ReasonPhrase}"
-				);
-			
-			return await response.Content.ReadAsStringAsync();
+			return http;
 		}
 	}
 }
