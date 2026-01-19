@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11408.102 d18.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebexSDK", "WebexSDK.csproj", "{116CE910-5D65-4311-8C49-C04AF4149C4F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{116CE910-5D65-4311-8C49-C04AF4149C4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{116CE910-5D65-4311-8C49-C04AF4149C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{116CE910-5D65-4311-8C49-C04AF4149C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{116CE910-5D65-4311-8C49-C04AF4149C4F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2E43D145-2803-4FD1-AC3E-32CD0748D154}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 1
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://khorgest.visualstudio.com/
+		SccLocalPath0 = .
+	EndGlobalSection
+EndGlobal
