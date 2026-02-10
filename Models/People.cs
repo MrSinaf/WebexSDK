@@ -13,11 +13,12 @@ namespace WebexSDK.Models
 		[JsonProperty("firstName")] public string FirstName { get; set; }
 		[JsonProperty("lastName")] public string LastName { get; set; }
 		[JsonProperty("userName")] public string UserName { get; set; }
+		[JsonProperty("avatar")] public string Avatar { get; set; }
 		[JsonProperty("orgId")] public string OrgId { get; set; }
 		[JsonProperty("created")] public DateTime Created { get; set; }
 		[JsonProperty("lastModified")] public DateTime LastModified { get; set; }
 		[JsonProperty("lastActivity")] public DateTime LastActivity { get; set; }
-		[JsonProperty("status")] public PeopleStatus status { get; set; }
+		[JsonProperty("status")] public PeopleStatus Status { get; set; }
 		[JsonProperty("type")] public PeopleType Type { get; set; }
 	}
 }

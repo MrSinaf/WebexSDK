@@ -59,6 +59,12 @@ namespace WebexSDK.Controllers
 		public async Task<bool> Transfer(string callId, string destination)
 			=> await client.Send("telephony/calls/transfer", new { callId1 = callId, destination });
 		
+		public async Task<bool> Hold(string callId)
+			=> await client.Send("telephony/calls/hold", new { callId });
+		
+		public async Task<bool> Resume(string callId)
+			=> await client.Send("telephony/calls/resume", new { callId });
+		
 		public async Task<bool> TransferInCallId(string callId, string targetCallId)
 			=> await client.Send(
 				"telephony/calls/transfer",

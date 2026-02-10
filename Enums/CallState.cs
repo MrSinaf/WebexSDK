@@ -11,6 +11,7 @@ namespace WebexSDK
 		[EnumMember(Value = "alerting")] Alerting,
 		[EnumMember(Value = "connected")] Connected,
 		[EnumMember(Value = "held")] Held,
-		[EnumMember(Value = "remoteHeld")] RemoteHeld
+		[EnumMember(Value = "remoteHeld")] RemoteHeld,
+		[EnumMember(Value = "disconnected")] Disconnected
 	}
 }
