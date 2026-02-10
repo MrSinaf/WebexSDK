@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using WebexSDK.Controllers;
+using WebexSDK.Models;
 
 namespace WebexSDK
 {
@@ -15,6 +17,7 @@ namespace WebexSDK
 		public readonly CallControls call;
 		public readonly PeopleControls people;
 		public readonly WebhooksControls webhooks;
+		public readonly ClientSocketControls clientSocket;
 		internal readonly string token;
 		
 		public WebexClient(string bearer)
@@ -23,6 +26,7 @@ namespace WebexSDK
 			call = new CallControls(this);
 			people = new PeopleControls(this);
 			webhooks = new WebhooksControls(this);
+			clientSocket = new ClientSocketControls();
 		}
 		
 		internal async Task<T> Send<T>(string operation, object body)
@@ -131,6 +135,41 @@ namespace WebexSDK
 			http.DefaultRequestHeaders.Authorization =
 					new AuthenticationHeaderValue("Bearer", token);
 			return http;
+		}
+		
+		public static async Task<AccessToken> GetAccessToken(
+			string code,
+			string clientId,
+			string clientSecret,
+			string redirectUri
+		)
+		{
+			if (string.IsNullOrWhiteSpace(code))
+				throw new ArgumentException("Code cannot be null or empty", nameof (code));
+			
+			using (var http = new HttpClient())
+			{
+				http.BaseAddress = new Uri(BASE_ADRESS);
+				http.DefaultRequestHeaders.Accept.Add(
+					new MediaTypeWithQualityHeaderValue("application/json")
+				);
+				var form = new FormUrlEncodedContent(new[]
+				{
+					new KeyValuePair<string, string>("grant_type", "authorization_code"),
+					new KeyValuePair<string, string>("client_id", clientId),
+					new KeyValuePair<string, string>("client_secret", clientSecret),
+					new KeyValuePair<string, string>(nameof (code), code),
+					new KeyValuePair<string, string>("redirect_uri", redirectUri)
+				});
+				var response = await http.PostAsync("access_token", form);
+				if (!response.IsSuccessStatusCode)
+					throw new HttpRequestException(
+						"Failed to retrieve access token from Webex: " +
+						$"{response.StatusCode} - {response.ReasonPhrase}"
+					);
+				var result = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<AccessToken>(result);
+			}
 		}
 	}
 }
