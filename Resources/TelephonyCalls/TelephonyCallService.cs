@@ -15,6 +15,7 @@ namespace WebexSDK.TelephonyCalls
 		
 		internal static void EventReceived(TelephonyCall call)
 		{
+			// TODO > Faut enlever ça ヽ（≧□≦）ノ
 			Console.WriteLine($"Call event received: {call.Type}");
 			switch (call.Type)
 			{

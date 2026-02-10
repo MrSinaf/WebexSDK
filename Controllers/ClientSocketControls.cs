@@ -69,6 +69,7 @@ namespace WebexSDK.Controllers
 					catch (Exception e)
 					{
 						IsConnected = false;
+						// TODO > Faut enlever ça ヽ（≧□≦）ノ
 						Console.WriteLine("WebSocket connection closed\n" + e.Message);
 					}
 				}
