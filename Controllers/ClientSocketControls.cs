@@ -66,11 +66,9 @@ namespace WebexSDK.Controllers
 							ComputeMessage(JsonConvert.DeserializeObject<WebhookResponse>(message));
 						}
 					}
-					catch (Exception e)
+					catch (Exception)
 					{
 						IsConnected = false;
-						// TODO > Faut enlever ça ヽ（≧□≦）ノ
-						Console.WriteLine("WebSocket connection closed\n" + e.Message);
 					}
 				}
 			}
@@ -101,7 +99,7 @@ namespace WebexSDK.Controllers
 				case WebhookResource.MeetingTranscripts:
 					break;
 				case WebhookResource.TelephonyCalls:
-					TelephonyCallService.EventReceived(response.Data.ToObject<TelephonyCall>());
+					TelephonyCallService.EventUserReceived(response.Data.ToObject<TelephonyCall>());
 					break;
 				case WebhookResource.TelephonyConference:
 					break;

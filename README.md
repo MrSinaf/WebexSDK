@@ -12,9 +12,9 @@ Une petite librairie non-officiel, pour effectuer efficacement quelques requête
 > Elle n'est que pour le moment une simple manière de communiquer avec Webex pour des
 > fonctionnalités ciblées.
 
-## Websocket : Server -> Client
+## Websocket : Server <-> Client
 
-Cette bibliothèque permet de configurer un WebSocket côté client!\
+Cette bibliothèque permet de configurer un WebSocket côté serveur et client!\
 Le client s'attend à récupérer un `WebhookResponse` en format JSON. Le filtre et la gestion des 
 clients doit se faire sur le serveur.
 
@@ -34,8 +34,8 @@ Et voilà (‾◡◝)!
 Les événements peuvent être écoutés via une class static par resource, par exemple pour la 
 resource `TelephonyCalls`, vous pouvez utiliser `TelephonyCallService`, exemple:
 ```cs
-TelephonyCallService.onCallOriginated += ... // Quand un appel est envoyé.
-TelephonyCallService.onCallReceived += ...   // Quand un appel est reçu.
+TelephonyCallService.onCallUserOriginated += ... // Quand un appel est envoyé.
+TelephonyCallService.onCallUserReceived += ...   // Quand un appel est reçu.
 ```
 La bibliothèque se chargera de filtrer et d'appeler les événements correspondants.
 

@@ -18,6 +18,7 @@ namespace WebexSDK
 		public readonly PeopleControls people;
 		public readonly WebhooksControls webhooks;
 		public readonly ClientSocketControls clientSocket;
+		public readonly ServerSocketControls serverSocket;
 		internal readonly string token;
 		
 		public WebexClient(string bearer)
@@ -27,6 +28,7 @@ namespace WebexSDK
 			people = new PeopleControls(this);
 			webhooks = new WebhooksControls(this);
 			clientSocket = new ClientSocketControls();
+			serverSocket = new ServerSocketControls();
 		}
 		
 		internal async Task<T> Send<T>(string operation, object body)

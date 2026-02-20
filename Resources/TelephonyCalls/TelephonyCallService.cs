@@ -4,44 +4,85 @@ namespace WebexSDK.TelephonyCalls
 {
 	public static class TelephonyCallService
 	{
-		public static event Action<TelephonyCall> onCallOriginating = delegate { };
-		public static event Action<TelephonyCall> onCallOriginated = delegate { };
-		public static event Action<TelephonyCall> onCallReceived = delegate { };
-		public static event Action<TelephonyCall> onCallAnswered = delegate { };
-		public static event Action<TelephonyCall> onCallDisconnect = delegate { };
-		public static event Action<TelephonyCall> onCallUpdated = delegate { };
-		public static event Action<TelephonyCall> onCallHeld = delegate { };
-		public static event Action<TelephonyCall> onCallResumed = delegate { };
+		public static event Action<TelephonyCall> onCallUserOriginating = delegate { };
+		public static event Action<TelephonyCall> onCallUserOriginated = delegate { };
+		public static event Action<TelephonyCall> onCallUserReceived = delegate { };
+		public static event Action<TelephonyCall> onCallUserAnswered = delegate { };
+		public static event Action<TelephonyCall> onCallUserDisconnect = delegate { };
+		public static event Action<TelephonyCall> onCallUserUpdated = delegate { };
+		public static event Action<TelephonyCall> onCallUserHeld = delegate { };
+		public static event Action<TelephonyCall> onCallUserResumed = delegate { };
 		
-		internal static void EventReceived(TelephonyCall call)
+		
+		public static event Action<string, TelephonyCall> onCallServerOriginating = delegate { };
+		public static event Action<string, TelephonyCall> onCallServerOriginated = delegate { };
+		public static event Action<string, TelephonyCall> onCallServerReceived = delegate { };
+		public static event Action<string, TelephonyCall> onCallServerAnswered = delegate { };
+		public static event Action<string, TelephonyCall> onCallServerDisconnect = delegate { };
+		public static event Action<string, TelephonyCall> onCallServerUpdated = delegate { };
+		public static event Action<string, TelephonyCall> onCallServerHeld = delegate { };
+		public static event Action<string, TelephonyCall> onCallServerResumed = delegate { };
+		
+		internal static void EventUserReceived(TelephonyCall call)
 		{
-			// TODO > Faut enlever ça ヽ（≧□≦）ノ
-			Console.WriteLine($"Call event received: {call.Type}");
 			switch (call.Type)
 			{
 				case TelephonyCallEventType.Originated:
-					onCallOriginated(call);
+					onCallUserOriginated(call);
 					break;
 				case TelephonyCallEventType.Received:
-					onCallReceived(call);
+					onCallUserReceived(call);
 					break;
 				case TelephonyCallEventType.Answered:
-					onCallAnswered(call);
+					onCallUserAnswered(call);
 					break;
 				case TelephonyCallEventType.Disconnected:
-					onCallDisconnect(call);
+					onCallUserDisconnect(call);
 					break;
 				case TelephonyCallEventType.Updated:
-					onCallUpdated(call);
+					onCallUserUpdated(call);
 					break;
 				case TelephonyCallEventType.Held:
-					onCallHeld(call);
+					onCallUserHeld(call);
 					break;
 				case TelephonyCallEventType.Resumed:
-					onCallResumed(call);
+					onCallUserResumed(call);
 					break;
 				case TelephonyCallEventType.Originating:
-					onCallOriginating(call);
+					onCallUserOriginating(call);
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
+		
+		internal static void EventServerReceived(string id, TelephonyCall call)
+		{
+			switch (call.Type)
+			{
+				case TelephonyCallEventType.Originated:
+					onCallServerOriginated(id, call);
+					break;
+				case TelephonyCallEventType.Received:
+					onCallServerReceived(id, call);
+					break;
+				case TelephonyCallEventType.Answered:
+					onCallServerAnswered(id, call);
+					break;
+				case TelephonyCallEventType.Disconnected:
+					onCallServerDisconnect(id, call);
+					break;
+				case TelephonyCallEventType.Updated:
+					onCallServerUpdated(id, call);
+					break;
+				case TelephonyCallEventType.Held:
+					onCallServerHeld(id, call);
+					break;
+				case TelephonyCallEventType.Resumed:
+					onCallServerResumed(id, call);
+					break;
+				case TelephonyCallEventType.Originating:
+					onCallServerOriginating(id, call);
 					break;
 				default:
 					throw new ArgumentOutOfRangeException();
