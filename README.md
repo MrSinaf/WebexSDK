@@ -14,7 +14,7 @@ Une petite librairie non-officiel, pour effectuer efficacement quelques requête
 
 ## Websocket : Server -> Client
 
-Cette bibliothèque permet de configurer un WebSocket côté client!\
+Cette bibliothèque permet de configurer un WebSocket côté serveur et client!\
 Le client s'attend à récupérer un `WebhookResponse` en format JSON. Le filtre et la gestion des 
 clients doit se faire sur le serveur.
 
